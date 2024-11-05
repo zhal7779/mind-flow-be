@@ -1,9 +1,9 @@
-const express = require("express");
+import express, { Request, Response } from "express";
 
 const app = express();
 
-app.get("/", (request, response) => {
-  response.send("hello world");
+app.get("/", (req: Request, res: Response): void => {
+  res.send("hello world");
 });
 
 app.listen(8080, () => console.log("8080번 포트 "));
