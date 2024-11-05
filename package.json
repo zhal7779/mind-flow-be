@@ -3,10 +3,18 @@
     "express": "^4.21.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   },
   "scripts": {
-    "start": "node app.ts",
-    "dev": "nodemon app.ts"
-  }
+    "start": "nodemon app.ts"
+  },
+  "name": "mindflow-be",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
