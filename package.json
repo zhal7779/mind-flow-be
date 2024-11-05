@@ -2,7 +2,11 @@
   "dependencies": {
     "express": "^4.21.1"
   },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
   "scripts": {
-    "start": "node app.ts"
+    "start": "node app.ts",
+    "dev": "nodemon app.ts"
   }
 }
