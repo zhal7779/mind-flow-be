@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import morgan from "morgan";
 
 const app = express();
 
@@ -11,6 +12,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(morgan("dev"));
 
 app.get("/", (req: Request, res: Response): void => {
   res.send("hello world");
