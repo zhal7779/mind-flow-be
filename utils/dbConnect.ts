@@ -1,5 +1,5 @@
 import mysql from 'mysql2';
-import dbConfig from '../config/dbConfigs';
+import dbConfig from '../config/dbConfig';
 
 // MySQL 연결 생성
 const connection = mysql.createConnection(dbConfig);
