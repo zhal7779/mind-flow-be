@@ -7,7 +7,6 @@ interface IdbConfig {
   user: string;
   password: string;
   database: string;
-  port: number;
 }
 
 const dbConfig: IdbConfig = {
@@ -15,7 +14,6 @@ const dbConfig: IdbConfig = {
   user: process.env.DATABASE_USERNAME || '',
   password: process.env.DATABASE_PASSWORD || '',
   database: process.env.DATABASE_NAME || '',
-  port: 3306,
 };
 
 export default dbConfig;
