@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import testRoutes from './routes/testRoutes';
+import authRoutes from './routes/authRoutes';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 
 app.use('/api/test', testRoutes);
+app.use('/api/auth', authRoutes);
 
 // app.get('/', (req: Request, res: Response): void => {
 //   res.send('hello world');
