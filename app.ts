@@ -14,12 +14,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// JSON 본문 파싱 미들웨어 추가
+app.use(express.json());
+
+// 로그 미들웨어
 app.use(morgan('dev'));
 
+// 라우트 설정
 app.use('/api/auth', authRoutes);
-
-// app.get('/', (req: Request, res: Response): void => {
-//   res.send('hello world');
-// });
 
 app.listen(8080, () => console.log('8080번 포트 '));
