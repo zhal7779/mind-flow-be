@@ -6,7 +6,6 @@ const connection = mysql.createConnection(dbConfig);
 
 // 연결 확인
 connection.connect((err) => {
-  console.log(dbConfig);
   if (err) {
     console.log(dbConfig);
     console.error('MySQL 연결 오류:', err.stack);

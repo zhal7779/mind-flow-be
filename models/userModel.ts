@@ -49,4 +49,4 @@ const postUser = async (
   }
 };
 
-export { getUser, postUser };
+export default { getUser, postUser };
