@@ -11,10 +11,10 @@ const getUser = async (req: Request, res: Response) => {
 };
 
 const postUser = async (req: Request, res: Response): Promise<void> => {
-  const newUser = req.body;
-  await authService.postUser(newUser);
-  res.json(201).send('성공');
   try {
+    const newUser = req.body;
+    await authService.postUser(newUser);
+    res.status(200).json('회원가입 성공');
   } catch (error) {
     res.status(500).send('유저 데이터 추가하기 오류');
   }
