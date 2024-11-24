@@ -23,6 +23,21 @@ const getUser = (
   });
 };
 
+const getUserById = (
+  id: string,
+  callback: (err: Error | null, result?: Iuser[]) => void
+): void => {
+  const query = 'SELECT * FROM users WHERE id = ?';
+
+  db.query(query, [id], (err, result: RowDataPacket[]) => {
+    if (err) {
+      console.error('사용자를 조회하는데 오류가 발생했습니다.', err);
+      return callback(err);
+    }
+    callback(null, result as Iuser[]);
+  });
+};
+
 const postUser = async (
   userData: { id: string; name: string; password: string },
   callback: (err: Error | null, result?: any) => void
@@ -49,4 +64,4 @@ const postUser = async (
   }
 };
 
-export default { getUser, postUser };
+export default { getUser, getUserById, postUser };
