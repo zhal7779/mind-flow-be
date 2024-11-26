@@ -14,7 +14,8 @@ export const authenticateUser = (
         res.status(401).json({ error: '회원이 인증되지 않았습니다.' });
       } else {
         // 토큰에서 추출한 유저 ID를 res.locals에 저장
-        res.locals.userId = decoded.id;
+        res.locals.userId = decoded.userId;
+
         next();
       }
     });

@@ -5,9 +5,9 @@ const postFile = (
   callback: (err: Error | null, result?: any) => void
 ) => {
   const fileId = uuidv4();
-
+  console.log(userId);
   const query =
-    'INSERT INTO files ( id, file_name, tag, theme_color, user_id) VALUES (?, ?, NOW(), ?, ?, ?)';
+    'INSERT INTO files ( id, file_name, tag, theme_color, created_at, updated_at, user_id) VALUES (?, ?, ?, ?, NOW(), NOW(), ?)';
   const value = [fileId, '이름이 없는 파일', null, 'purple', userId];
 
   db.query(query, value, (err, result) => {
