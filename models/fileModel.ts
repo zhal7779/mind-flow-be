@@ -1,7 +1,7 @@
 import db from '../utils/dbConnect';
 import { v4 as uuidv4 } from 'uuid';
 const postFile = (
-  userId,
+  userId: string,
   callback: (err: Error | null, result?: any) => void
 ) => {
   const fileId = uuidv4();
