@@ -7,13 +7,16 @@ export const authenticateUser = (
   next: NextFunction
 ) => {
   if (req.headers.authorization) {
-    const token = req.headers.authorization.split('Bearer ')[1]; //토큰만 추출
+    const token = req.headers.authorization.split('Bearer ')[1];
 
-    jwt.verify(token, process.env.JWT_SECRET_KEY!, (err) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY!, (err, decoded) => {
       if (err) {
         res.status(401).json({ error: '회원이 인증되지 않았습니다.' });
       } else {
-        next(); //토큰이 정상적으로 인증되면 next()를 통해 다음 미들웨어로 넘어감
+        // decoded 객체에 있는 userId 추출
+        const decodedToken = decoded as { userId: string }; // 토큰 payload 구조에 따라 변경
+        req.user = { id: decodedToken.userId }; // req.user에 userId 저장
+        next(); // 다음 미들웨어로 진행
       }
     });
   } else {
