@@ -7,7 +7,7 @@ const getFiles = async (req: Request, res: Response) => {
     const files = await fileService.getFiles(userId);
     res.json(files);
   } catch (error) {
-    res.status(500).send('회원정보 조회에 실패했습니다.');
+    res.status(500).send('파일 조회에 실패했습니다.');
   }
 };
 
@@ -23,13 +23,27 @@ const postFile = async (req: Request, res: Response): Promise<void> => {
 
 const patchFileTag = async (req: Request, res: Response): Promise<void> => {
   try {
-    const newTagData = req.body;
+    const updateTagData = req.body;
     const userId = res.locals.userId;
-    await fileService.patchFileTag(userId, newTagData);
-    res.status(200).json('태그가 업데이트 되었습니다.');
+    await fileService.patchFileTag(userId, updateTagData);
+    res.status(200).json('태그가 수정 되었습니다.');
   } catch (error) {
-    res.status(500).send({ message: '태그 업데이트에 실패했습니다.' });
+    res.status(500).send({ message: '태그 수정 실패했습니다.' });
   }
 };
 
-export default { getFiles, postFile, patchFileTag };
+const patchFileThemeColor = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const updateThemeColorData = req.body;
+    const userId = res.locals.userId;
+    await fileService.patchFileThemeColor(userId, updateThemeColorData);
+    res.status(200).json('테마 색상이 수정 되었습니다.');
+  } catch (error) {
+    res.status(500).send({ message: '테마 색상 수정 실패했습니다.' });
+  }
+};
+
+export default { getFiles, postFile, patchFileTag, patchFileThemeColor };

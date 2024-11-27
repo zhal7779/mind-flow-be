@@ -35,13 +35,13 @@ const insertFile = (
 
 const updateFileTag = (
   userId: string,
-  newTagData: { tag: string; fileId: string },
+  newTagData: { tag: string; file_id: string },
   callback: (err: Error | null, result?: any) => void
 ) => {
-  const { tag, fileId } = newTagData;
+  const { tag, file_id } = newTagData;
   const query = 'UPDATE files SET tag = ? WHERE file_id = ? AND user_id = ?';
 
-  db.query(query, [tag, fileId, userId], (err, result) => {
+  db.query(query, [tag, file_id, userId], (err, result) => {
     if (err) {
       console.error('tag 필드를 업데이트하지 못했습니다.', err);
       return callback(err);
@@ -51,14 +51,18 @@ const updateFileTag = (
 };
 
 const updateFileThemeColor = (
-  fileId: string,
   userId: string,
-  newThemeColor: string,
+  updateThemeData: {
+    file_id: string;
+    theme_color: string;
+  },
+
   callback: (err: Error | null, result?: any) => void
 ) => {
+  const { theme_color, file_id } = updateThemeData;
   const query =
     'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ?';
-  db.query(query, [newThemeColor, fileId, userId], (err, result) => {
+  db.query(query, [theme_color, file_id, userId], (err, result) => {
     if (err) {
       console.error('theme_color 필드를 업데이트하지 못했습니다.', err);
       return callback(err);

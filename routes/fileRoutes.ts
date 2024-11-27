@@ -13,4 +13,11 @@ router.post('/create', authenticateUser, fileController.postFile);
 //파일 태그 수정
 router.patch('/update/tag', authenticateUser, fileController.patchFileTag);
 
+//파일 테마 색상 수정
+router.patch(
+  '/update/themecolor',
+  authenticateUser,
+  fileController.patchFileThemeColor
+);
+
 export default router;

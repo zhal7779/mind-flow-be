@@ -26,7 +26,7 @@ const postFile = async (userId: string) => {
 
 const patchFileTag = (
   userId: string,
-  newTagData: { tag: string; fileId: string }
+  newTagData: { tag: string; file_id: string }
 ) => {
   return new Promise((resolve, reject) => {
     fileModel.updateFileTag(userId, newTagData, (err, result) => {
@@ -39,4 +39,19 @@ const patchFileTag = (
   });
 };
 
-export default { getFiles, postFile, patchFileTag };
+const patchFileThemeColor = (
+  userId: string,
+  updateThemeData: { file_id: string; theme_color: string }
+) => {
+  return new Promise((resolve, reject) => {
+    fileModel.updateFileThemeColor(userId, updateThemeData, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+export default { getFiles, postFile, patchFileTag, patchFileThemeColor };
