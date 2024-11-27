@@ -21,8 +21,8 @@ const insertFile = (
 ) => {
   const fileId = uuidv4();
   const query =
-    'INSERT INTO files ( id, file_name, tag, theme_color, created_at, updated_at, user_id) VALUES (?, ?, ?, ?, NOW(), NOW(), ?)';
-  const value = [fileId, '이름이 없는 파일', null, 'purple', userId];
+    'INSERT INTO files ( id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
+  const value = [fileId, '이름이 없는 파일', null, 'purple', userId, false];
 
   db.query(query, value, (err, result) => {
     if (err) {
@@ -39,7 +39,8 @@ const updateFileTag = (
   callback: (err: Error | null, result?: any) => void
 ) => {
   const { tag, file_id } = newTagData;
-  const query = 'UPDATE files SET tag = ? WHERE file_id = ? AND user_id = ?';
+  const query =
+    'UPDATE files SET tag = ? WHERE file_id = ? AND user_id = ? AND storage = false';
 
   db.query(query, [tag, file_id, userId], (err, result) => {
     if (err) {
@@ -61,7 +62,7 @@ const updateFileThemeColor = (
 ) => {
   const { theme_color, file_id } = updateThemeData;
   const query =
-    'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ?';
+    'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ? storage = false';
   db.query(query, [theme_color, file_id, userId], (err, result) => {
     if (err) {
       console.error('theme_color 필드를 업데이트하지 못했습니다.', err);
