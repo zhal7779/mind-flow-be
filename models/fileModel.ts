@@ -39,7 +39,7 @@ const updateFileTag = (
   callback: (err: Error | null, result?: any) => void
 ) => {
   const { tag, fileId } = newTagData;
-  const query = 'UPDATE files SET tag = ? WHERE id = ? AND user_id = ?';
+  const query = 'UPDATE files SET tag = ? WHERE file_id = ? AND user_id = ?';
 
   db.query(query, [tag, fileId, userId], (err, result) => {
     if (err) {

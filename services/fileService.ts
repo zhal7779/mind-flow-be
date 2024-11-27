@@ -1,5 +1,17 @@
 import fileModel from '../models/fileModel';
 
+const getFiles = async (userId: string) => {
+  return new Promise((resolve, reject) => {
+    fileModel.selectFiles(userId, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 const postFile = async (userId: string) => {
   return new Promise((resolve, reject) => {
     fileModel.insertFile(userId, (err, result) => {
@@ -27,4 +39,4 @@ const patchFileTag = (
   });
 };
 
-export default { postFile, patchFileTag };
+export default { getFiles, postFile, patchFileTag };

@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
 import fileService from '../services/fileService';
 
-const postFile = async (req: Request, res: Response): Promise<void> => {
+const getFiles = async (req: Request, res: Response) => {
   try {
     const userId = res.locals.userId; // 미들웨어에서 설정한 userId 가져옴
+    const files = await fileService.getFiles(userId);
+    res.json(files);
+  } catch (error) {
+    res.status(500).send('회원정보 조회에 실패했습니다.');
+  }
+};
+
+const postFile = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = res.locals.userId;
     await fileService.postFile(userId);
     res.status(200).json('파일이 생성되었습니다.');
   } catch (error) {
@@ -22,4 +32,4 @@ const patchFileTag = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export default { postFile, patchFileTag };
+export default { getFiles, postFile, patchFileTag };
