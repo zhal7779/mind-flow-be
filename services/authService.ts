@@ -4,7 +4,7 @@ import userModel from '../models/userModel';
 
 const getUser = async () => {
   return new Promise((resolve, reject) => {
-    userModel.getUser((err, result) => {
+    userModel.selectUsers((err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -20,7 +20,7 @@ const postUser = async (newUser: {
   name: string;
 }) => {
   return new Promise((resolve, reject) => {
-    userModel.postUser(newUser, (err, result) => {
+    userModel.insertUser(newUser, (err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -33,7 +33,7 @@ const postUser = async (newUser: {
 // 로그인 처리
 const postLogin = async (loginData: { id: string; password: string }) => {
   return new Promise((resolve, reject) => {
-    userModel.getUserById(loginData.id, async (err, result) => {
+    userModel.selectUserById(loginData.id, async (err, result) => {
       if (err) {
         return reject(err);
       }

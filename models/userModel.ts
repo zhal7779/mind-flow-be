@@ -9,7 +9,7 @@ interface Iuser {
   created_at: string;
 }
 
-const getUser = (
+const selectUsers = (
   callback: (err: Error | null, result?: Iuser[]) => void
 ): void => {
   const query = 'SELECT * FROM users';
@@ -23,7 +23,7 @@ const getUser = (
   });
 };
 
-const getUserById = (
+const selectUserById = (
   id: string,
   callback: (err: Error | null, result?: Iuser[]) => void
 ): void => {
@@ -38,7 +38,7 @@ const getUserById = (
   });
 };
 
-const postUser = async (
+const insertUser = async (
   userData: { id: string; name: string; password: string },
   callback: (err: Error | null, result?: any) => void
 ): Promise<void> => {
@@ -64,4 +64,4 @@ const postUser = async (
   }
 };
 
-export default { getUser, getUserById, postUser };
+export default { selectUsers, selectUserById, insertUser };
