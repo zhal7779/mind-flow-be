@@ -12,4 +12,19 @@ const postFile = async (userId: string) => {
   });
 };
 
-export default { postFile };
+const patchFileTag = (
+  userId: string,
+  newTagData: { tag: string; fileId: string }
+) => {
+  return new Promise((resolve, reject) => {
+    fileModel.updateFileTag(userId, newTagData, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+export default { postFile, patchFileTag };

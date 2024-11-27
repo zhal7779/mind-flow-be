@@ -34,13 +34,14 @@ const insertFile = (
 };
 
 const updateFileTag = (
-  fileId: string,
   userId: string,
-  newTag: string,
+  newTagData: { tag: string; fileId: string },
   callback: (err: Error | null, result?: any) => void
 ) => {
+  const { tag, fileId } = newTagData;
   const query = 'UPDATE files SET tag = ? WHERE file_id = ? AND user_id = ?';
-  db.query(query, [newTag, fileId, userId], (err, result) => {
+
+  db.query(query, [tag, fileId, userId], (err, result) => {
     if (err) {
       console.error('tag 필드를 업데이트하지 못했습니다.', err);
       return callback(err);
