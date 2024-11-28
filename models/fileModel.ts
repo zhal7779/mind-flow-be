@@ -3,10 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 const selectFiles = (
   userId: string,
+  url: string,
   callback: (err: Error | null, result?: any) => void
 ) => {
-  const query = 'SELECT * FROM files WHERE user_id = ?';
-  db.query(query, userId, (err, result) => {
+  const isStorage = url === '/storage';
+  const query = 'SELECT * FROM files WHERE user_id = ? AND storage = ?';
+  db.query(query, [userId, isStorage], (err, result) => {
     if (err) {
       console.error('file 테이블을 불러오지 못했습니다.', err);
       return callback(err);

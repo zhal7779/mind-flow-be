@@ -3,8 +3,9 @@ import fileService from '../services/fileService';
 
 const getFiles = async (req: Request, res: Response) => {
   try {
+    const url = req.url;
     const userId = res.locals.userId; // 미들웨어에서 설정한 userId 가져옴
-    const files = await fileService.getFiles(userId);
+    const files = await fileService.getFiles(userId, url);
     res.json(files);
   } catch (error) {
     res.status(500).send('파일 조회에 실패했습니다.');

@@ -1,8 +1,8 @@
 import fileModel from '../models/fileModel';
 
-const getFiles = async (userId: string) => {
+const getFiles = async (userId: string, url: string) => {
   return new Promise((resolve, reject) => {
-    fileModel.selectFiles(userId, (err, result) => {
+    fileModel.selectFiles(userId, url, (err, result) => {
       if (err) {
         reject(err);
       } else {

@@ -9,6 +9,8 @@ router.get('/', authenticateUser, fileController.getFiles);
 
 //파일 즐겨찾기 불러오기
 router.get('/bookmark', authenticateUser, fileController.getFileTag);
+//휴지통 파일 불러오기
+router.get('/storage', authenticateUser, fileController.getFiles);
 
 // 파일 생성
 router.post('/create', authenticateUser, fileController.postFile);
