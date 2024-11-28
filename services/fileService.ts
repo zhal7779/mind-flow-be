@@ -64,6 +64,20 @@ const patchFileThemeColor = (
     });
   });
 };
+const patchFileName = (
+  userId: string,
+  updateFileNameData: { file_id: string; file_name: string }
+) => {
+  return new Promise((resolve, reject) => {
+    fileModel.updateFileName(userId, updateFileNameData, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 export default {
   getFiles,
@@ -71,4 +85,5 @@ export default {
   postFile,
   patchFileTag,
   patchFileThemeColor,
+  patchFileName,
 };

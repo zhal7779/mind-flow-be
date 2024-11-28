@@ -24,5 +24,7 @@ router.patch(
   authenticateUser,
   fileController.patchFileThemeColor
 );
+//파일 이름 수정
+router.patch('/update/name', authenticateUser, fileController.patchFileName);
 
 export default router;

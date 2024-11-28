@@ -64,10 +64,22 @@ const patchFileThemeColor = async (
   }
 };
 
+const patchFileName = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const updateFileNameData = req.body;
+    const userId = res.locals.userId;
+    await fileService.patchFileName(userId, updateFileNameData);
+    res.status(200).json('파일 이름이 변경되었습니다.');
+  } catch (error) {
+    res.status(500).send({ message: '파일 이름이 변경되지 않았습니다.' });
+  }
+};
+
 export default {
   getFiles,
   getFileTag,
   postFile,
   patchFileTag,
   patchFileThemeColor,
+  patchFileName,
 };

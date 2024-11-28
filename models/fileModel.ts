@@ -79,10 +79,27 @@ const updateFileThemeColor = (
 ) => {
   const { theme_color, file_id } = updateThemeData;
   const query =
-    'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ? storage = false';
+    'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ? AND storage = false';
   db.query(query, [theme_color, file_id, userId], (err, result) => {
     if (err) {
       console.error('theme_color 필드를 업데이트하지 못했습니다.', err);
+      return callback(err);
+    }
+    callback(null, result);
+  });
+};
+
+const updateFileName = (
+  userId: string,
+  updateFileNameData: { file_id: string; file_name: string },
+  callback: (err: Error | null, result?: any) => void
+) => {
+  const { file_name, file_id } = updateFileNameData;
+  const query =
+    'UPDATE files SET file_name = ? WHERE file_id = ? AND user_id = ? AND storage = false';
+  db.query(query, [file_name, file_id, userId], (err, result) => {
+    if (err) {
+      console.error('file_name 필드를 업데이트하지 못했습니다.', err);
       return callback(err);
     }
     callback(null, result);
@@ -95,4 +112,5 @@ export default {
   insertFile,
   updateFileTag,
   updateFileThemeColor,
+  updateFileName,
 };
