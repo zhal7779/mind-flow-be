@@ -78,6 +78,19 @@ const patchFileName = (
     });
   });
 };
+
+const patchFileStorage = (userId: string, file_id: string) => {
+  return new Promise((resolve, reject) => {
+    fileModel.updateFileStorage(userId, file_id, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 const deleteFile = (userId: string, file_id: string) => {
   return new Promise((resolve, reject) => {
     fileModel.deleteFile(userId, file_id, (err, result) => {
@@ -97,5 +110,6 @@ export default {
   patchFileTag,
   patchFileThemeColor,
   patchFileName,
+  patchFileStorage,
   deleteFile,
 };

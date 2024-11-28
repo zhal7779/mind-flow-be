@@ -106,6 +106,22 @@ const updateFileName = (
   });
 };
 
+const updateFileStorage = (
+  userId: string,
+  file_id: string,
+  callback: (err: Error | null, result?: any) => void
+) => {
+  const query =
+    'UPDATE files SET deleted_at = NULL, storage = false WHERE file_id = ? AND user_id = ?';
+  db.query(query, [file_id, userId], (err, result) => {
+    if (err) {
+      console.error('파일 복구 오류:', err);
+      return callback(err);
+    }
+    callback(null, result);
+  });
+};
+
 const deleteFile = (
   userId: string,
   file_id: string,
@@ -129,5 +145,6 @@ export default {
   updateFileTag,
   updateFileThemeColor,
   updateFileName,
+  updateFileStorage,
   deleteFile,
 };

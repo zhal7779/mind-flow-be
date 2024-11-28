@@ -74,6 +74,16 @@ const patchFileName = async (req: Request, res: Response): Promise<void> => {
     res.status(500).send({ message: '파일 이름이 변경되지 않았습니다.' });
   }
 };
+const patchFileStorage = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { file_id } = req.params;
+    const userId = res.locals.userId;
+    await fileService.patchFileStorage(userId, file_id);
+    res.status(200).json('파일이 성공적으로 복구되었습니다.');
+  } catch (error) {
+    res.status(500).send({ message: '파일 복구 중 오류가 발생했습니다.' });
+  }
+};
 
 const deleteFile = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -93,5 +103,6 @@ export default {
   patchFileTag,
   patchFileThemeColor,
   patchFileName,
+  patchFileStorage,
   deleteFile,
 };

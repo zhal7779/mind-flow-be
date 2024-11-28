@@ -9,6 +9,7 @@ router.get('/', authenticateUser, fileController.getFiles);
 
 //파일 즐겨찾기 불러오기
 router.get('/bookmark', authenticateUser, fileController.getFileTag);
+
 //휴지통 파일 불러오기
 router.get('/storage', authenticateUser, fileController.getFiles);
 
@@ -24,8 +25,18 @@ router.patch(
   authenticateUser,
   fileController.patchFileThemeColor
 );
+
 //파일 이름 수정
 router.patch('/update/name', authenticateUser, fileController.patchFileName);
 
+//파일 복구
+router.patch(
+  '/update/storage/:file_id',
+  authenticateUser,
+  fileController.patchFileStorage
+);
+
+// 파일 삭제
 router.delete('/delete/:file_id', authenticateUser, fileController.deleteFile);
+
 export default router;
