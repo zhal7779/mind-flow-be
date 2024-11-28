@@ -78,6 +78,17 @@ const patchFileName = (
     });
   });
 };
+const deleteFile = (userId: string, file_id: string) => {
+  return new Promise((resolve, reject) => {
+    fileModel.deleteFile(userId, file_id, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 export default {
   getFiles,
@@ -86,4 +97,5 @@ export default {
   patchFileTag,
   patchFileThemeColor,
   patchFileName,
+  deleteFile,
 };

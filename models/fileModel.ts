@@ -10,7 +10,7 @@ const selectFiles = (
   const query = 'SELECT * FROM files WHERE user_id = ? AND storage = ?';
   db.query(query, [userId, isStorage], (err, result) => {
     if (err) {
-      console.error('file 테이블을 불러오지 못했습니다.', err);
+      console.error('파일 읽기 오류:', err);
       return callback(err);
     }
     callback(null, result);
@@ -25,7 +25,7 @@ const selectFileTag = (
   const query = 'SELECT * FROM files WHERE user_id = ? AND tag = ?';
   db.query(query, [userId, tag], (err, result) => {
     if (err) {
-      console.error(`${tag} 테이블을 불러오지 못했습니다.`, err);
+      console.error(`즐겨찾기 읽기 오류:`, err);
       return callback(err);
     }
     callback(null, result);
@@ -43,7 +43,7 @@ const insertFile = (
 
   db.query(query, value, (err, result) => {
     if (err) {
-      console.error('file 테이블에 추가하지 못했습니다.', err);
+      console.error('파일 추가 오류:', err);
       return callback(err);
     }
     callback(null, result);
@@ -61,7 +61,7 @@ const updateFileTag = (
 
   db.query(query, [tag, file_id, userId], (err, result) => {
     if (err) {
-      console.error('tag 필드를 업데이트하지 못했습니다.', err);
+      console.error('파일 태그 수정 오류:', err);
       return callback(err);
     }
     callback(null, result);
@@ -82,7 +82,7 @@ const updateFileThemeColor = (
     'UPDATE files SET theme_color = ? WHERE file_id = ? AND user_id = ? AND storage = false';
   db.query(query, [theme_color, file_id, userId], (err, result) => {
     if (err) {
-      console.error('theme_color 필드를 업데이트하지 못했습니다.', err);
+      console.error('파일 테마색상 수정 오류:', err);
       return callback(err);
     }
     callback(null, result);
@@ -99,7 +99,23 @@ const updateFileName = (
     'UPDATE files SET file_name = ? WHERE file_id = ? AND user_id = ? AND storage = false';
   db.query(query, [file_name, file_id, userId], (err, result) => {
     if (err) {
-      console.error('file_name 필드를 업데이트하지 못했습니다.', err);
+      console.error('파일 이름 수정 오류:', err);
+      return callback(err);
+    }
+    callback(null, result);
+  });
+};
+
+const deleteFile = (
+  userId: string,
+  file_id: string,
+  callback: (err: Error | null, result?: any) => void
+) => {
+  const query =
+    'UPDATE files SET deleted_at = NOW(), storage = true WHERE file_id = ? AND user_id = ?';
+  db.query(query, [file_id, userId], (err, result) => {
+    if (err) {
+      console.error('파일 삭제 오류:', err);
       return callback(err);
     }
     callback(null, result);
@@ -113,4 +129,5 @@ export default {
   updateFileTag,
   updateFileThemeColor,
   updateFileName,
+  deleteFile,
 };

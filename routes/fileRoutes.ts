@@ -27,4 +27,5 @@ router.patch(
 //파일 이름 수정
 router.patch('/update/name', authenticateUser, fileController.patchFileName);
 
+router.delete('/delete/:file_id', authenticateUser, fileController.deleteFile);
 export default router;
