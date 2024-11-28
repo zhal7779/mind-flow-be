@@ -7,6 +7,9 @@ const router = express.Router();
 //파일 전체 불러오기
 router.get('/', authenticateUser, fileController.getFiles);
 
+//파일 즐겨찾기 불러오기
+router.get('/bookmark', authenticateUser, fileController.getFileTag);
+
 // 파일 생성
 router.post('/create', authenticateUser, fileController.postFile);
 

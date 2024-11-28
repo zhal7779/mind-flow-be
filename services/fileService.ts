@@ -11,6 +11,17 @@ const getFiles = async (userId: string) => {
     });
   });
 };
+const getFileTag = async (userId: string, tag: string) => {
+  return new Promise((resolve, reject) => {
+    fileModel.selectFileTag(userId, tag, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 const postFile = async (userId: string) => {
   return new Promise((resolve, reject) => {
@@ -54,4 +65,10 @@ const patchFileThemeColor = (
   });
 };
 
-export default { getFiles, postFile, patchFileTag, patchFileThemeColor };
+export default {
+  getFiles,
+  getFileTag,
+  postFile,
+  patchFileTag,
+  patchFileThemeColor,
+};

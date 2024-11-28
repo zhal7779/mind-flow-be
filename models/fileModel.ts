@@ -15,13 +15,28 @@ const selectFiles = (
   });
 };
 
+const selectFileTag = (
+  userId: string,
+  tag: string,
+  callback: (err: Error | null, result?: any) => void
+) => {
+  const query = 'SELECT * FROM files WHERE user_id = ? AND tag = ?';
+  db.query(query, [userId, tag], (err, result) => {
+    if (err) {
+      console.error(`${tag} 테이블을 불러오지 못했습니다.`, err);
+      return callback(err);
+    }
+    callback(null, result);
+  });
+};
+
 const insertFile = (
   userId: string,
   callback: (err: Error | null, result?: any) => void
 ) => {
   const fileId = uuidv4();
   const query =
-    'INSERT INTO files ( id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
+    'INSERT INTO files ( file_id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
   const value = [fileId, '이름이 없는 파일', null, 'purple', userId, false];
 
   db.query(query, value, (err, result) => {
@@ -72,4 +87,10 @@ const updateFileThemeColor = (
   });
 };
 
-export default { selectFiles, insertFile, updateFileTag, updateFileThemeColor };
+export default {
+  selectFiles,
+  selectFileTag,
+  insertFile,
+  updateFileTag,
+  updateFileThemeColor,
+};

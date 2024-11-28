@@ -11,6 +11,23 @@ const getFiles = async (req: Request, res: Response) => {
   }
 };
 
+const getFileTag = async (req: Request, res: Response): Promise<void> => {
+  const { tag } = req.query;
+  try {
+    const userId = res.locals.userId;
+    if (!tag || typeof tag !== 'string') {
+      res.status(400).send('유효한 tag 쿼리 파라미터를 제공해주세요.');
+      return;
+    }
+
+    const files = await fileService.getFileTag(userId, tag);
+    res.json(files);
+  } catch (error) {
+    console.error('Error retrieving files:', error);
+    res.status(500).send(`${tag} 파일 조회에 실패했습니다.`);
+  }
+};
+
 const postFile = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = res.locals.userId;
@@ -46,4 +63,10 @@ const patchFileThemeColor = async (
   }
 };
 
-export default { getFiles, postFile, patchFileTag, patchFileThemeColor };
+export default {
+  getFiles,
+  getFileTag,
+  postFile,
+  patchFileTag,
+  patchFileThemeColor,
+};
