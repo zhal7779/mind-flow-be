@@ -3,7 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import authRoutes from './routes/authRoutes';
 import fileRoutes from './routes/fileRoutes';
-
+import './tasks/cronTasks';
 const app = express();
 
 const corsOptions = {
