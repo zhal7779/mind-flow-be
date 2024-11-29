@@ -40,11 +40,22 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id, password } = req.body;
 
-    const tokenInfo = await authService.postLogin({ id, password });
+    const { accessToken, refreshToken } = await authService.postLogin({
+      id,
+      password,
+    });
 
-    // 토큰 반환
+    // Refresh Token을 HttpOnly 쿠키로 설정
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      // /secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서는 secure 옵션 활성화
+      sameSite: 'strict', // CSRF 공격 방지
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 유효
+    });
+
+    // accessToken 반환
     res.status(200).json({
-      data: tokenInfo,
+      data: accessToken,
       success: true,
       code: 200,
       msg: 'success',

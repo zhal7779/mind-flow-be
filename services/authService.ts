@@ -31,7 +31,10 @@ const postUser = async (newUser: {
 };
 
 // 로그인 처리
-const postLogin = async (loginData: { id: string; password: string }) => {
+const postLogin = async (loginData: {
+  id: string;
+  password: string;
+}): Promise<{ accessToken: string; refreshToken: string }> => {
   return new Promise((resolve, reject) => {
     userModel.selectUserById(loginData.id, async (err, result) => {
       if (err) {
