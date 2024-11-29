@@ -1,3 +1,4 @@
+import * as jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import authService from '../services/authService';
 
@@ -67,8 +68,50 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//액세스 토큰 재발급
+const postRefresh = async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.cookies;
+  if (!refreshToken) {
+    res.status(401).json({
+      success: false,
+      code: 401,
+      msg: '리프레쉬 토큰이 존재하지 않습니다.',
+    });
+    return;
+  }
+
+  try {
+    // Refresh Token 검증
+    const payload = jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET_KEY!
+    ) as { userId: string };
+
+    // 새 Access Token 발급
+    const accessToken = jwt.sign(
+      { userId: payload.userId },
+      process.env.JWT_SECRET_KEY!,
+      { expiresIn: '15m' }
+    );
+
+    res.status(200).json({
+      data: accessToken,
+      success: true,
+      code: 200,
+      msg: 'success',
+    });
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      code: 401,
+      msg: '리프레쉬 토큰이 검증되지 않았습니다.',
+    });
+  }
+};
+
 export default {
   getUser,
   postUser,
   postLogin,
+  postRefresh,
 };
