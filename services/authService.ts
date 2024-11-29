@@ -50,14 +50,20 @@ const postLogin = async (loginData: { id: string; password: string }) => {
         return reject(new Error('비밀번호가 틀렸습니다.'));
       }
 
-      // JWT 토큰 생성
-      const token = jwt.sign(
+      // Access 토큰 생성
+      const accessToken = jwt.sign(
         { userId: user.id, username: user.name },
         process.env.JWT_SECRET_KEY!,
-        { expiresIn: '1h' } // 1시간 동안 유효한 토큰
+        { expiresIn: '1h' } // 1시간 동안 유효
       );
 
-      resolve(token);
+      // Refresh 토큰 생성
+      const refreshToken = jwt.sign(
+        { userId: user.id },
+        process.env.JWT_REFRESH_SECRET_KEY!,
+        { expiresIn: '7d' } // 7일 동안 유효
+      );
+      resolve({ accessToken, refreshToken });
     });
   });
 };
