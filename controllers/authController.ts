@@ -5,9 +5,17 @@ import authService from '../services/authService';
 const getUser = async (req: Request, res: Response) => {
   try {
     const users = await authService.getUser();
-    res.json(users);
+    res
+      .status(200)
+      .json({ data: users, success: true, code: 200, msg: 'success' });
   } catch (error) {
-    res.status(500).send('회원정보 조회에 실패했습니다.');
+    res
+      .status(500)
+      .json({
+        success: false,
+        code: 500,
+        msg: '회원정보 조회에 실패했습니다.',
+      });
   }
 };
 //회원가입
@@ -15,9 +23,17 @@ const postUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const newUser = req.body;
     await authService.postUser(newUser);
-    res.status(200).json('회원가입 성공했습니다.');
+
+    res.status(200).json({
+      data: null,
+      success: true,
+      code: 200,
+      msg: 'success',
+    });
   } catch (error) {
-    res.status(500).send('회원가입에 실패했습니다.');
+    res
+      .status(500)
+      .json({ success: false, code: 500, msg: '회원가입에 실패했습니다.' });
   }
 };
 
@@ -29,9 +45,16 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
     const token = await authService.postLogin({ id, password });
 
     // 토큰 반환
-    res.status(200).json({ token });
+    res.status(200).json({
+      data: { token: token },
+      success: true,
+      code: 200,
+      msg: 'success',
+    });
   } catch (error) {
-    res.status(400).json({ message: '로그인에 실패했습니다.' });
+    res
+      .status(400)
+      .json({ success: false, code: 400, msg: '로그인에 실패했습니다.' });
   }
 };
 
