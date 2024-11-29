@@ -13,6 +13,6 @@ router.post('/', authController.postUser);
 router.post('/login', authController.postLogin);
 
 //토큰 재발급
-router.post('/refresh', authController.postRefresh);
+router.get('/refresh', authController.postRefresh);
 
 export default router;
