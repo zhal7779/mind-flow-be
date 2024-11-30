@@ -36,7 +36,7 @@ const postFile = async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json({
       success: true,
-      code: 400,
+      code: 200,
       data: { file_id },
       msg: '파일이 생성되었습니다.',
     });

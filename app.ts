@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import authRoutes from './routes/authRoutes';
 import fileRoutes from './routes/fileRoutes';
+import nodeRoutes from './routes/nodeRoutes';
 import './tasks/cronTasks';
 const app = express();
 
@@ -24,5 +25,6 @@ app.use(morgan('dev'));
 // 라우트 설정
 app.use('/api/auth', authRoutes);
 app.use('/api/file', fileRoutes);
+app.use('/api/node', nodeRoutes);
 
 app.listen(8080, () => console.log('8080번 포트 '));
