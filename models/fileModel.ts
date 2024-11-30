@@ -128,10 +128,18 @@ const deleteFile = (
   file_list: string[],
   callback: (err: Error | null, result?: any) => void
 ) => {
-  // Convert the array of file IDs into a string format suitable for SQL query
   const placeholders = file_list.map(() => '?').join(', ');
 
-  const query = `UPDATE files SET deleted_at = NOW(), storage = true WHERE file_id IN (${placeholders}) AND user_id = ?`;
+  const query = `
+    UPDATE files 
+    SET 
+      deleted_at = NOW(), 
+      scheduled_deletion_at = DATE_ADD(NOW(), INTERVAL 30 DAY), 
+      storage = true 
+    WHERE 
+      file_id IN (${placeholders}) 
+      AND user_id = ?
+  `;
 
   // Combine file IDs with the user ID in the query parameters
   const params = [...file_list, userId];
