@@ -5,6 +5,6 @@ import { authenticateUser } from '../middleware/authenticateUser';
 const router = express.Router();
 
 //노드 데이터 가져오기
-router.get('/tree/:file_id', authenticateUser, nodeController.getNode);
+router.get('/tree', authenticateUser, nodeController.getNode);
 
 export default router;
