@@ -38,16 +38,50 @@ const insertFile = (
   callback: (err: Error | null, result?: any) => void
 ) => {
   const fileId = uuidv4();
-  const query =
-    'INSERT INTO files ( file_id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
-  const value = [fileId, '이름이 없는 파일', null, 'purple', userId, false];
+  const nodeId = Math.floor(Math.random() * 100000);
+  const queryFile =
+    'INSERT INTO files (file_id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
+  const queryNode =
+    'INSERT INTO nodes (node_id, file_id, file_name, value, node, level, position, parent_node, left_child, right_child) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-  db.query(query, value, (err, result) => {
-    if (err) {
-      console.error('파일 추가 오류:', err);
-      return callback(err);
+  const fileValues = [
+    fileId,
+    '이름이 없는 파일',
+    null,
+    'purple',
+    userId,
+    false,
+  ];
+  const nodeValues = [
+    nodeId,
+    fileId,
+    '이름이 없는 파일',
+    '',
+    0,
+    0,
+    JSON.stringify({ x: 0, y: 0, r: 0, t: 0 }),
+    JSON.stringify({ node: -1, position: { x: 0, y: 0, r: 0, t: 0 } }),
+    JSON.stringify([]),
+    JSON.stringify([]),
+  ];
+
+  // files 테이블에 데이터 삽입
+  db.query(queryFile, fileValues, (fileErr) => {
+    if (fileErr) {
+      console.error('files 삽입 오류:', fileErr);
+      return callback(fileErr);
     }
-    callback(null, fileId);
+
+    // nodes 테이블에 데이터 삽입
+    db.query(queryNode, nodeValues, (nodeErr) => {
+      if (nodeErr) {
+        console.error('nodes 삽입 오류:', nodeErr);
+        return callback(nodeErr);
+      }
+
+      // 성공적으로 삽입 완료
+      callback(null, fileId);
+    });
   });
 };
 
