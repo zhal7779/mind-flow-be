@@ -32,8 +32,16 @@ const getFileTag = async (req: Request, res: Response): Promise<void> => {
 const postFile = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = res.locals.userId;
-    await fileService.postFile(userId);
-    res.status(200).json('파일이 생성되었습니다.');
+    const file_id = await fileService.postFile(userId);
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        code: 400,
+        data: { file_id },
+        msg: '파일이 생성되었습니다.',
+      });
   } catch (error) {
     res.status(500).send({ message: '파일 생성에 실패했습니다.' });
   }

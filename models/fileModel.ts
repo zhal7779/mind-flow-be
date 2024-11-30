@@ -46,7 +46,7 @@ const insertFile = (
       console.error('파일 추가 오류:', err);
       return callback(err);
     }
-    callback(null, result);
+    callback(null, fileId);
   });
 };
 
