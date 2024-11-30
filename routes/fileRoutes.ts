@@ -31,7 +31,7 @@ router.patch('/update/name', authenticateUser, fileController.patchFileName);
 
 //파일 복구
 router.patch(
-  '/update/storage/:file_id',
+  '/update/storage',
   authenticateUser,
   fileController.patchFileStorage
 );

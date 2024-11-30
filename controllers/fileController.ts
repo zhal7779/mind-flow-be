@@ -34,14 +34,12 @@ const postFile = async (req: Request, res: Response): Promise<void> => {
     const userId = res.locals.userId;
     const file_id = await fileService.postFile(userId);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        code: 400,
-        data: { file_id },
-        msg: '파일이 생성되었습니다.',
-      });
+    res.status(200).json({
+      success: true,
+      code: 400,
+      data: { file_id },
+      msg: '파일이 생성되었습니다.',
+    });
   } catch (error) {
     res.status(500).send({ message: '파일 생성에 실패했습니다.' });
   }
@@ -84,9 +82,9 @@ const patchFileName = async (req: Request, res: Response): Promise<void> => {
 };
 const patchFileStorage = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { file_id } = req.params;
+    const { file_list } = req.body;
     const userId = res.locals.userId;
-    await fileService.patchFileStorage(userId, file_id);
+    await fileService.patchFileStorage(userId, file_list);
     res.status(200).json('파일이 성공적으로 복구되었습니다.');
   } catch (error) {
     res.status(500).send({ message: '파일 복구 중 오류가 발생했습니다.' });

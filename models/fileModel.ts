@@ -109,12 +109,17 @@ const updateFileName = (
 
 const updateFileStorage = (
   userId: string,
-  file_id: string,
+  file_list: string[],
   callback: (err: Error | null, result?: any) => void
 ) => {
-  const query =
-    'UPDATE files SET deleted_at = NULL, storage = false WHERE file_id = ? AND user_id = ?';
-  db.query(query, [file_id, userId], (err, result) => {
+  const placeholders = file_list.map(() => '?').join(', ');
+
+  const query = `UPDATE files SET deleted_at = NULL,  scheduled_deletion_at = NULL, storage = false WHERE 
+      file_id IN (${placeholders}) 
+      AND user_id = ?`;
+
+  const params = [...file_list, userId];
+  db.query(query, params, (err, result) => {
     if (err) {
       console.error('파일 복구 오류:', err);
       return callback(err);

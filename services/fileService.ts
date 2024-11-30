@@ -79,9 +79,9 @@ const patchFileName = (
   });
 };
 
-const patchFileStorage = (userId: string, file_id: string) => {
+const patchFileStorage = (userId: string, file_list: string[]) => {
   return new Promise((resolve, reject) => {
-    fileModel.updateFileStorage(userId, file_id, (err, result) => {
+    fileModel.updateFileStorage(userId, file_list, (err, result) => {
       if (err) {
         reject(err);
       } else {
