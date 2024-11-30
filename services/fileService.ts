@@ -91,9 +91,9 @@ const patchFileStorage = (userId: string, file_id: string) => {
   });
 };
 
-const deleteFile = (userId: string, file_id: string) => {
+const deleteFile = (userId: string, file_list: string[]) => {
   return new Promise((resolve, reject) => {
-    fileModel.deleteFile(userId, file_id, (err, result) => {
+    fileModel.deleteFile(userId, file_list, (err, result) => {
       if (err) {
         reject(err);
       } else {

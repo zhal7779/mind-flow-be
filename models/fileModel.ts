@@ -124,12 +124,18 @@ const updateFileStorage = (
 
 const deleteFile = (
   userId: string,
-  file_id: string,
+  file_list: string[],
   callback: (err: Error | null, result?: any) => void
 ) => {
-  const query =
-    'UPDATE files SET deleted_at = NOW(), storage = true WHERE file_id = ? AND user_id = ?';
-  db.query(query, [file_id, userId], (err, result) => {
+  // Convert the array of file IDs into a string format suitable for SQL query
+  const placeholders = file_list.map(() => '?').join(', ');
+
+  const query = `UPDATE files SET deleted_at = NOW(), storage = true WHERE file_id IN (${placeholders}) AND user_id = ?`;
+
+  // Combine file IDs with the user ID in the query parameters
+  const params = [...file_list, userId];
+
+  db.query(query, params, (err, result) => {
     if (err) {
       console.error('파일 삭제 오류:', err);
       return callback(err);

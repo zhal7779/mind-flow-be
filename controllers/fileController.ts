@@ -87,9 +87,9 @@ const patchFileStorage = async (req: Request, res: Response): Promise<void> => {
 
 const deleteFile = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { file_id } = req.params;
+    const { file_list } = req.body;
     const userId = res.locals.userId;
-    await fileService.deleteFile(userId, file_id);
+    await fileService.deleteFile(userId, file_list);
     res.status(200).json('파일이 성공적으로 보관함에 이동되었습니다.');
   } catch (error) {
     res.status(500).send({ message: '파일 삭제 중 오류가 발생했습니다.' });
