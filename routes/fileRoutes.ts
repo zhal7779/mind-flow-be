@@ -37,6 +37,7 @@ router.patch(
 );
 
 // 파일 삭제
-router.delete('/delete/:file_id', authenticateUser, fileController.deleteFile);
+// 실제 삭제가 아니기에 api 메소드는 patch 사용
+router.patch('/delete', authenticateUser, fileController.deleteFile);
 
 export default router;
