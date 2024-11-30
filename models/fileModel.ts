@@ -7,7 +7,8 @@ const selectFiles = (
   callback: (err: Error | null, result?: any) => void
 ) => {
   const isStorage = url === '/storage';
-  const query = 'SELECT * FROM files WHERE user_id = ? AND storage = ?';
+  const query =
+    'SELECT * FROM files WHERE user_id = ? AND storage = ? ORDER BY updated_at DESC';
   db.query(query, [userId, isStorage], (err, result) => {
     if (err) {
       console.error('파일 읽기 오류:', err);
