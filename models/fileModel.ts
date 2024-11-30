@@ -42,7 +42,7 @@ const insertFile = (
   const queryFile =
     'INSERT INTO files (file_id, file_name, tag, theme_color, created_at, updated_at, user_id, storage) VALUES (?, ?, ?, ?, NOW(), NOW(), ?, ?)';
   const queryNode =
-    'INSERT INTO nodes (node_id, file_id, value, node, level, position, parent_node, left_child, right_child) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    'INSERT INTO nodes (node_id, file_id, value, node, level, position, parent_node, left_child, right_child) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
   const fileValues = [
     fileId,
