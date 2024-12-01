@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import authRoutes from './routes/authRoutes';
 import fileRoutes from './routes/fileRoutes';
 import nodeRoutes from './routes/nodeRoutes';
+import cookieParser from 'cookie-parser';
 import './tasks/cronTasks';
 const app = express();
 
@@ -21,6 +22,9 @@ app.use(express.json());
 
 // 로그 미들웨어
 app.use(morgan('dev'));
+
+// 쿠키 파서 등록
+app.use(cookieParser());
 
 // 라우트 설정
 app.use('/api/auth', authRoutes);
