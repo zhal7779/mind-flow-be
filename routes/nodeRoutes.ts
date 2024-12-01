@@ -7,5 +7,5 @@ const router = express.Router();
 //노드 데이터 가져오기
 router.get('/tree', authenticateUser, nodeController.getNode);
 
-router.put('/tree/update', authenticateUser, nodeController.getNode);
+router.put('/tree/update', authenticateUser, nodeController.putNode);
 export default router;

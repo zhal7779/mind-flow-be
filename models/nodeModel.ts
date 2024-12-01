@@ -54,22 +54,22 @@ WHERE node_id = ? AND file_id = ?
 `;
 
   const fileValues = [
-    newNodeData.file_name,
-    newNodeData.tag,
-    newNodeData.theme_color,
-    newNodeData.file_id,
+    newNodeData.file_name || null, // 파일 이름 (nullable)
+    newNodeData.tag || null, // 태그 (nullable)
+    newNodeData.theme_color || null, // 테마 색상 (nullable)
+    newNodeData.file_id, // 파일 ID
   ];
 
   const nodeValues = [
-    newNodeData.tree.value,
-    newNodeData.tree.node,
-    newNodeData.tree.level,
-    newNodeData.tree.position,
-    newNodeData.tree.parent_node,
-    newNodeData.tree.left_child,
-    newNodeData.tree.right_child,
-    newNodeData.node_id,
-    newNodeData.file_id,
+    newNodeData.tree.value || null, // 값
+    newNodeData.tree.node || null, // 노드 ID
+    newNodeData.tree.level || null, // 레벨
+    JSON.stringify(newNodeData.tree.position || null), // 위치
+    JSON.stringify(newNodeData.tree.parent_node || null), // 부모 노드
+    JSON.stringify(newNodeData.tree.left_child || []), // 왼쪽 자식 노드 (기본값 빈 배열)
+    JSON.stringify(newNodeData.tree.right_child || []), // 오른쪽 자식 노드 (기본값 빈 배열)
+    newNodeData.node_id, // 노드 ID
+    newNodeData.file_id, // 파일 ID
   ];
 
   // files 테이블 업데이트
