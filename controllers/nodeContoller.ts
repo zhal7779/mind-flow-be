@@ -52,4 +52,24 @@ const getNode = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export default { getNode };
+const putNode = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const newNodeData = req.body;
+    const { file_id, node_id } = await nodeService.putNode(newNodeData);
+
+    res.status(200).json({
+      success: true,
+      code: 200,
+      data: { file_id: file_id, node_id: node_id },
+      msg: 'success',
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: true,
+      code: 500,
+      data: undefined,
+      msg: 'faild',
+    });
+  }
+};
+export default { getNode, putNode };
