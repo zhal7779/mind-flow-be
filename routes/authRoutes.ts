@@ -12,6 +12,9 @@ router.post('/', authController.postUser);
 // 로그인
 router.post('/login', authController.postLogin);
 
+//로그아웃
+router.post('/logout', authController.postLogin);
+
 //토큰 재발급
 router.get('/refresh', authController.postRefresh);
 

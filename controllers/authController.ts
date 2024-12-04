@@ -68,6 +68,26 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+// 로그아웃
+const postLogout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+
+    res.status(200).json({
+      success: true,
+      code: 200,
+      msg: '로그아웃이 성공적으로 처리되었습니다.',
+    });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ success: false, code: 400, msg: '로그아웃에 실패했습니다.' });
+  }
+};
+
 //액세스 토큰 재발급
 const postRefresh = async (req: Request, res: Response): Promise<void> => {
   const { refreshToken } = req.cookies;
@@ -113,5 +133,6 @@ export default {
   getUser,
   postUser,
   postLogin,
+  postLogout,
   postRefresh,
 };
