@@ -32,3 +32,13 @@ app.use("/api/file", fileRoutes);
 app.use("/api/node", nodeRoutes);
 
 app.listen(8080, () => console.log("8080번 포트 "));
+
+// 전역 예외 처리 (Promise 예외)
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
+// 전역 예외 처리 (동기 예외)
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
