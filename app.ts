@@ -9,7 +9,7 @@ import "./tasks/cronTasks";
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "*"],
+  origin: ["*"], //
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"], // 허용할 헤더
   credentials: true, // 자격 증명 허용 (쿠키 전송 허용)
