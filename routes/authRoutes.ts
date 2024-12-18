@@ -6,6 +6,9 @@ const router = express.Router();
 // 유저 조회
 router.get("/", authController.getUser);
 
+// 아이디 중복 확인
+router.post("/duplicate-id", authController.postDuplicateId);
+
 // 유저 생성
 router.post("/", authController.postUser);
 

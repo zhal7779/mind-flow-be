@@ -1,6 +1,6 @@
-import * as jwt from 'jsonwebtoken';
-import { Request, Response } from 'express';
-import authService from '../services/authService';
+import * as jwt from "jsonwebtoken";
+import { Request, Response } from "express";
+import authService from "../services/authService";
 
 //회원정보 전체 조회
 const getUser = async (req: Request, res: Response) => {
@@ -8,12 +8,12 @@ const getUser = async (req: Request, res: Response) => {
     const users = await authService.getUser();
     res
       .status(200)
-      .json({ data: users, success: true, code: 200, msg: 'success' });
+      .json({ data: users, success: true, code: 200, msg: "success" });
   } catch (error) {
     res.status(500).json({
       success: false,
       code: 500,
-      msg: '회원정보 조회에 실패했습니다.',
+      msg: "회원정보 조회에 실패했습니다.",
     });
   }
 };
@@ -27,12 +27,37 @@ const postUser = async (req: Request, res: Response): Promise<void> => {
       data: null,
       success: true,
       code: 200,
-      msg: 'success',
+      msg: "success",
     });
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, code: 500, msg: '회원가입에 실패했습니다.' });
+      .json({ success: false, code: 500, msg: "회원가입에 실패했습니다." });
+  }
+};
+
+//아이디 중복조회
+
+const postDuplicateId = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.body;
+    const response = await authService.postDuplicateId(id);
+    if (!response) {
+      res.status(200).json({
+        data: response,
+        success: true,
+        code: 200,
+        msg: "사용가능한 아이디 입니다",
+      });
+    } else {
+      res
+        .status(409)
+        .json({ success: false, code: 409, msg: "중복되는 아이디 입니다." });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, code: 500, msg: "중복 조회를 실패했습니다" });
   }
 };
 
@@ -47,10 +72,10 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
     });
 
     // Refresh Token을 HttpOnly 쿠키로 설정
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       // /secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서는 secure 옵션 활성화
-      sameSite: 'strict', // CSRF 공격 방지
+      sameSite: "strict", // CSRF 공격 방지
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7일 동안 유효
     });
 
@@ -59,32 +84,32 @@ const postLogin = async (req: Request, res: Response): Promise<void> => {
       data: accessToken,
       success: true,
       code: 200,
-      msg: 'success',
+      msg: "success",
     });
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, code: 400, msg: '로그인에 실패했습니다.' });
+      .json({ success: false, code: 400, msg: "로그인에 실패했습니다." });
   }
 };
 
 // 로그아웃
 const postLogout = async (req: Request, res: Response): Promise<void> => {
   try {
-    res.clearCookie('refreshToken', {
+    res.clearCookie("refreshToken", {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: "strict",
     });
 
     res.status(200).json({
       success: true,
       code: 200,
-      msg: '로그아웃이 성공적으로 처리되었습니다.',
+      msg: "로그아웃이 성공적으로 처리되었습니다.",
     });
   } catch (error) {
     res
       .status(400)
-      .json({ success: false, code: 400, msg: '로그아웃에 실패했습니다.' });
+      .json({ success: false, code: 400, msg: "로그아웃에 실패했습니다." });
   }
 };
 
@@ -95,7 +120,7 @@ const postRefresh = async (req: Request, res: Response): Promise<void> => {
     res.status(401).json({
       success: false,
       code: 401,
-      msg: '리프레쉬 토큰이 존재하지 않습니다.',
+      msg: "리프레쉬 토큰이 존재하지 않습니다.",
     });
     return;
   }
@@ -111,20 +136,20 @@ const postRefresh = async (req: Request, res: Response): Promise<void> => {
     const accessToken = jwt.sign(
       { userId: payload.userId },
       process.env.JWT_SECRET_KEY!,
-      { expiresIn: '15m' }
+      { expiresIn: "15m" }
     );
 
     res.status(200).json({
       data: accessToken,
       success: true,
       code: 200,
-      msg: 'success',
+      msg: "success",
     });
   } catch (error) {
     res.status(401).json({
       success: false,
       code: 401,
-      msg: '리프레쉬 토큰이 검증되지 않았습니다.',
+      msg: "리프레쉬 토큰이 검증되지 않았습니다.",
     });
   }
 };
@@ -132,6 +157,7 @@ const postRefresh = async (req: Request, res: Response): Promise<void> => {
 export default {
   getUser,
   postUser,
+  postDuplicateId,
   postLogin,
   postLogout,
   postRefresh,
