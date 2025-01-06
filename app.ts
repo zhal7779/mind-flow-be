@@ -5,11 +5,12 @@ import authRoutes from "./routes/authRoutes";
 import fileRoutes from "./routes/fileRoutes";
 import nodeRoutes from "./routes/nodeRoutes";
 import cookieParser from "cookie-parser";
-import "./tasks/cronTasks";
+// cron 실행시 db에러로 인해 주석 처리
+// import "./tasks/cronTasks";
 const app = express();
 
 const corsOptions = {
-  origin: ["*"],
+  origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"], // 허용할 헤더
   credentials: true, // 자격 증명 허용 (쿠키 전송 허용)
